@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 인접 형제 선택자 : .oranger의 다음 형제 요소 1개를 선택한다. */
+        .orange + li {
+            color: red;
+        }
+
+        input + label {
+            color: red
+        }
+
+        #fruit2 + label {
+            color: yellow;
+        }
+
+        /* 일반 형제 선택자 : .orange의 다음 형제 요소를 모두 선택택 */
+        .orange ~ li {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>딸기</li>
+        <li>수박</li>
+        <li class="orange">오렌지</li>
+        <li>망고</li>
+        <li>사과</li>
+    </ul>
+    <input type = "checkbox" name = "fruit" id = "fruit" value = "apple">
+    <label for="fruit">사과</label>
+    <input type = "checkbox" name = "fruit" id = "fruit2" value = "banana">
+    <label for="fruit2">바나나</label>
+</body>
+</html>

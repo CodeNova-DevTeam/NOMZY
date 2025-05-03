@@ -1,0 +1,10 @@
+body {
+  background-color: bisque;
+}
+h1 {
+  color: red;
+}
+p {
+  color: rgb(85, 0, 255);
+  text-align: center;
+}
