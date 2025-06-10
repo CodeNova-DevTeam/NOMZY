@@ -1,0 +1,53 @@
+//3. 최종 유효성 검사 및 로그인 처리 localStorage로 전송
+// window.check = function () {
+//     if (!validationStates.email) {
+//         if (userIdInput.value.trim() === "") {
+//             emailErrorMessageLog.textContent = "아이디(이메일)를 입력해주세요.";
+//         } else {
+//             emailErrorMessageLog.textContent = "올바른 이메일 형식이 아닙니다.";
+//         }
+//         emailErrorMessageLog.style.display = "block";
+//         userIdInput.focus();
+//         return false;
+//     } else {
+//         emailErrorMessageLog.style.display = "none";
+//     }
+
+//     if (!validationStates.password) {
+//         passwordErrorMessageLog.textContent = "비밀번호를 입력해주세요.";
+//         passwordErrorMessageLog.style.display = "block";
+//         userPasswordInput.focus();
+//         return false;
+//     } else {
+//         passwordErrorMessageLog.style.display = "none";
+//     }
+
+//     // 모든 필드 유효성 검사 통과 시 로그인 로직 수행
+//     const email = userIdInput.value.trim();
+//     const password = userPasswordInput.value.trim();
+
+//     const users = JSON.parse(localStorage.getItem("users")) || [];
+//     const foundUser = users.find(user => user.email === email && user.password === password);
+
+//     if (foundUser) {
+//         alert(`로그인 성공! 환영합니다, ${foundUser.nickname} 님!`);
+//         console.log("로그인한 사용자 정보:", foundUser);
+
+//         userIdInput.value = "";
+//         userPasswordInput.value = "";
+//         emailErrorMessageLog.style.display = "none";
+//         passwordErrorMessageLog.style.display = "none";
+//         validationStates.email = false;
+//         validationStates.password = false;
+
+//         return true;
+//     } else {
+//         alert("아이디 또는 비밀번호를 다시 확인해주세요. ");
+//         userPasswordInput.value = "";
+//         validationStates.password = false;
+//         userPasswordInput.focus();
+//         return false;
+//     }
+// };
+
+

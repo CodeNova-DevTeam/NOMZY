@@ -1,0 +1,269 @@
+
+/* 전체 배경 스타일 */
+html {
+  max-height: 100vh;
+}
+span[name="errorMessage"] {
+  display: none; /*초기에는 숨김 처리*/
+  color: red;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  /* 다른 공통 스타일 속성들 */
+}
+body {
+  background-color: #f0f8ff; /* 연한 하늘색 배경 */
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 요소 배치 */
+  align-items: center; /* 가로 중앙 정렬 */
+  padding: 2rem;
+  box-sizing: border-box;
+  justify-content: center; /* 세로 방향으로 요소들을 위에서부터 배치 */
+}
+
+/* 로고 스타일 */
+.logo {
+  color: aqua;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* 폼 컨테이너 스타일 */
+form {
+  background-image: linear-gradient(to bottom, rgb(161, 255, 255), white); /* 옅은 아쿠아색 그라데이션 */
+  border-radius: 0.8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  width: 90%;
+  max-width: 35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  
+}
+
+/* 입력 필드 공통 스타일 */
+.inputBox {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  max-width: 45rem;
+  border: 1px solid rgb(125, 125, 129);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; /* 내부 요소들을 세로로 배치 */
+  align-items: center;
+}
+
+.inputBox::placeholder {
+  font-size: 1.1rem;
+}
+.authentication-group {
+  width: 100%;
+  max-width: 45rem; /* 폼의 최대 너비와 동일하게 설정하여 중앙 정렬 효과를 유지 */
+  display: flex;
+  flex-direction: column; /* 내부 요소들을 세로로 배치 */
+  align-items: center; /* 내부 요소들을 가로 방향으로 중앙 정렬 */
+  margin-bottom: 0.8rem; /* 다른 요소와의 간격 유지 */
+  box-sizing: border-box; /* padding, border가 width에 포함되도록 함 */
+}
+
+/* 인증번호 받기 버튼 스타일 */
+.authentication-number-button {
+  width: 100%; /* 부모 div의 전체 너비를 차지하도록 수정 */
+  max-width: 45rem;
+  font-size: 1rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: rgb(255, 255, 255);
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: rgb(1, 160, 160) solid 0.1rem;
+  background-color: aqua;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 0.8rem; /* 인증번호 입력창과의 간격 유지 */
+  box-sizing: border-box;
+  
+}
+
+.authentication-number-button:hover {
+  background-color: rgb(0, 212, 212);
+}
+.inputBox#userCheckTel {
+  width: 100%; /* 변경: 부모 authentication-group의 전체 너비 사용 */
+  max-width: 45rem; /* 변경: authentication-group과 동일한 최대 너비 */
+  padding: 0.8rem;
+  border: 1px solid rgb(125, 125, 129);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  margin-bottom: 0; /* authentication-group의 margin-bottom으로 간격 조절 */
+}
+
+/* 버튼 컨테이너 스타일 */
+.buttonBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* 아이디 찾기 버튼 스타일 */
+.nextButton {
+  width: auto;
+  max-width: none;
+  font-size: 1.3rem;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: rgb(255, 255, 255);
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  border: rgb(1, 160, 160) solid 0.1rem;
+  background-color: aqua;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  margin: 0 auto;
+}
+
+.nextButton:hover {
+  background-color: rgb(0, 212, 212);
+}
+
+/* 반응형 웹 디자인 */
+@media (max-width: 29.9375rem) {
+  .logo {
+    font-size: 2rem;
+    margin-top: 8vh;
+    margin-bottom: 3vh;
+  }
+  form {
+    padding: 1.5rem;
+    width: 95%;
+    max-width: none;
+  }
+  .inputBox {
+    font-size: 1rem;
+  }
+  .inputBox::placeholder {
+    font-size: 1rem;
+  }
+  .authentication-number-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+  .nextButton {
+    font-size: 1.1rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* 최소 너비 480px 이상, 최대 너비 767px 이하 (작은 태블릿) */
+@media (min-width: 30rem) and (max-width: 47.9375rem) {
+  .logo {
+    font-size: 2.2rem;
+    margin-top: 10vh;
+    margin-bottom: 4vh;
+  }
+  form {
+    padding: 2rem;
+    width: 85%;
+    max-width: none;
+  }
+  .inputBox {
+    font-size: 1.05rem;
+  }
+  .inputBox::placeholder {
+    font-size: 1.05rem;
+  }
+  .authentication-number-button {
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+  }
+  .nextButton {
+    font-size: 1.2rem;
+    padding: 0.7rem 1rem;
+  }
+}
+
+/* 최소 너비 768px 이상, 최대 너비 991px 이하 (태블릿) */
+@media (min-width: 48rem) and (max-width: 61.9375rem) {
+  .logo {
+    font-size: 2.8rem;
+    margin-top: 12vh;
+    margin-bottom: 5vh;
+  }
+  form {
+    padding: 2.5rem;
+    width: 75%;
+    max-width: 40rem;
+  }
+  .inputBox {
+    font-size: 1.1rem;
+  }
+  .inputBox::placeholder {
+    font-size: 1.1rem;
+  }
+  .authentication-number-button {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+  .nextButton {
+    font-size: 1.3rem;
+    padding: 0.8rem 1rem;
+  }
+}
+
+/* 최소 너비 992px 이상, 최대 너비 1199px 이하 (작은 데스크탑) */
+@media (min-width: 62rem) and (max-width: 74.9375rem) {
+  .logo {
+    font-size: 3.2rem;
+    margin-top: 15vh;
+    margin-bottom: 6vh;
+  }
+  form {
+    padding: 3rem;
+    width: 65%;
+    max-width: 45rem;
+  }
+  .inputBox {
+    font-size: 1.15rem;
+  }
+  .inputBox::placeholder {
+    font-size: 1.15rem;
+  }
+  .authentication-number-button {
+    font-size: 1.05rem;
+    padding: 0.8rem 1.2rem;
+  }
+  .nextButton {
+    font-size: 1.35rem;
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+@media (min-width: 75rem) {
+  .logo {
+    font-size: 5rem;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+  }
+  .inputBox {
+    font-size: 1.2rem;
+    max-width: 45rem;
+  }
+  .authentication-number-button {
+    font-size: 1.1rem;
+    max-width: 45rem;
+  }
+  .nextButton {
+    font-size: 1.4rem;
+  }
+  form {
+    padding: 5rem;
+    max-width: 40rem;
+  }
+}
