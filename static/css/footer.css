@@ -1,0 +1,23 @@
+footer {
+  text-align: center;
+  padding: 1%;
+  background-color: #f3f3f3;
+  width: 100%;
+  font-size: 0.7rem;
+  /* bottom: 0; */
+  margin-top: auto;
+}
+
+.footer-email {
+  margin-bottom: 0.25rem;
+}
+
+.mail-link {
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.mail-link:hover {
+  color: #cacaca;
+}

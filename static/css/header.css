@@ -1,0 +1,46 @@
+header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(81, 81, 81, 0.2);
+  padding: 1%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.header-center {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #86ebff;
+}
+
+.none-login-btn {
+  background: none;
+  border: none;
+}
+
+.header-btn {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+
+.header-btn:hover {
+  color: #dcdcdc;
+}
+
+.header-dash {
+  font-size: 0.7rem;
+}

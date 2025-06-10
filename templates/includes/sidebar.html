@@ -1,0 +1,32 @@
+<div id="search" class="search-bar">
+  <form onsubmit="handleSearch(event)" class="search-form" autocomplete="on">
+    <input list="suggestions" type="text" id="searchInput" placeholder="찾으시는 맛집을 입력해 주세요." />
+    <datalist id="suggestions">
+      <option value="삼겹살" />
+      <option value="파스타" />
+      <option value="카페" />
+      <option value="분식" />
+      <option value="일식" />
+    </datalist>
+    <button type="submit" class="search-button">
+      <img src="../public/img/search.png" alt="검색" />
+    </button>
+  </form>
+</div>
+
+<!-- <div id="search" class="search-bar">
+  <form onsubmit="handleSearch(event)" class="search-form" autocomplete="off">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="찾으시는 맛집을 입력해 주세요."
+      oninput="showSuggestions(event)"
+      onfocus="showSuggestions(event)"
+      onblur="hideSuggestionsDelayed()"
+    />
+    <ul id="suggestionList" class="suggestion-list hidden"></ul>
+    <button type="submit" class="search-button">
+      <img src="../public/img/search.png" alt="검색" />
+    </button>
+  </form>
+</div> -->

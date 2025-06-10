@@ -1,0 +1,44 @@
+.menu-mainName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  left: 0.3rem;
+  margin: 0;
+}
+
+.menu-mainbtn {
+  background: none;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.256);
+}
+
+.menu-text {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to right, #bdf4ff, #ffffff);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  transition: background-size 0.4s ease, color 0.4s ease;
+  text-align: center;
+  padding: 1.4rem 0rem;
+  color: black;
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  display: flex;
+}
+
+.menu-text:hover {
+  background-size: 100% 100%;
+  color: #cacaca;
+}

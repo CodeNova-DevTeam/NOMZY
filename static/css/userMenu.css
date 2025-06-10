@@ -1,0 +1,51 @@
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-name-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: black;
+  transition: color 0.25s;
+}
+
+.user-name-button:hover {
+  color: #cacaca;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 120%;
+  left: -1rem;
+  background: white;
+  border: 1px solid #86ebff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 8rem;
+  display: none;
+  flex-direction: column;
+  border-radius: 0.5rem;
+}
+
+.dropdown-menu a {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: black;
+  font-size: 0.75rem;
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: linear-gradient(to right, #bdf4ff, #ffffff);
+  background-size: 0% 100%; /* 초기엔 가로 0% */
+  background-repeat: no-repeat;
+  background-position: left;
+  transition: background-size 0.3s ease, color 0.4s ease;
+  text-align: center;
+}
+
+.dropdown-menu a:hover {
+  background-size: 100% 100%;
+}

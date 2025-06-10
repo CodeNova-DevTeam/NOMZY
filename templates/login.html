@@ -1,0 +1,67 @@
+<!-- <form action="/login" method="post">
+    <label>이메일: <input type="email" name="email" required></label><br>
+    <label>비밀번호: <input type="password" name="password" required></label><br>
+    <button type="submit">로그인</button>
+</form>
+<a href="../templates/main.html">
+  <button>메인으로</button>
+	</a>
+
+<div th:if="${errorMessage}" th:text="${errorMessage}"></div> -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>로그인 페이지</title>
+  </head>
+  <body>
+    <h2>로그인</h2>
+
+    <form id="loginForm">
+      <label>이메일: <input type="email" name="email" required /></label><br />
+      <label>비밀번호: <input type="password" name="password" required /></label><br />
+      <button type="submit">로그인</button>
+    </form>
+
+    <p id="errorMessage" style="color: red"></p>
+
+    <a href="main.html">
+      <button>메인으로</button>
+    </a>
+
+    <script>
+      document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        try {
+          const response = await fetch("http://100.74.28.37:8080/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            document.getElementById("errorMessage").innerText = "로그인 실패: " + errorText;
+            return;
+          }
+
+          const result = await response.json();
+          localStorage.setItem("nickname", result.nickname); // 닉네임 저장
+          alert(result.message);
+          window.location.href = "main.html"; // 메인으로 이동
+        } catch (err) {
+          document.getElementById("errorMessage").innerText = "에러 발생: " + err.message;
+        }
+      });
+    </script>
+  </body>
+</html>
