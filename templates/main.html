@@ -186,7 +186,7 @@
         display: block;
         width: 100%;
         padding: 8px 17px;
-        color: #e3f2ff;
+        color: white;
         text-align: left;
         background: none;
         border: none;
@@ -196,8 +196,8 @@
         transition: background 0.13s;
       }
       .dropdown-item:hover {
-        background: #29334b;
-        color: #ffe063;
+        /* background: #29334b; */
+        color: #86ebff;
       }
 
       /* 오른쪽 영역: 비워둘 경우 최소사이즈 */
@@ -863,33 +863,19 @@
       <header>
         <div class="header-top">
           <div class="header-left">
-            <!-- <a id="loginBtn" href="login.html" class="header-btn none-login-btn">로그인</a>
-            <span id="headerDash" class="header-dash"> | </span>
-            <a id="signupBtn" href="sign-up.html" class="header-btn none-login-btn">회원가입</a>
-            <button id="nicknameBtn" class="header-btn user-name-button" type="button">
-              <span id="nicknameText">홍민기</span>
-              <span class="dropdown-icon">▼</span>
-            </button>
-            <div id="dropdownMenu" class="dropdown-menu">
-              <a href="/profile" class="dropdown-item">마이페이지</a>
-              <button class="dropdown-item" onclick="handleLogout()">로그아웃</button>
-            </div> -->
-
             <!-- 로그인/회원가입 버튼 (비로그인 상태에서만 보여야 함) -->
             <a id="loginBtn" class="header-btn none-login-btn">로그인</a>
             <span id="headerDash" class="header-dash"> | </span>
             <a id="signupBtn" class="header-btn none-login-btn">회원가입</a>
 
             <!-- 로그인 후 보여줄 닉네임 + 드롭다운 -->
-            <button id="nicknameBtn" class="user-name-button">
-              <span id="nicknameText"></span>
-              ▼
-            </button>
+            <button id="nicknameBtn" class="user-name-button"><span id="nicknameText"></span> ▼</button>
             <div id="dropdownMenu" class="dropdown-menu">
-              <a href="/profile">마이페이지</a>
-              <button onclick="handleLogout()">로그아웃</button>
+              <a id="mypageLink" class="dropdown-item">마이페이지</a>
+              <button id="logoutBtn" class="dropdown-item" onclick="handleLogout()">로그아웃</button>
             </div>
           </div>
+
           <div class="header-center">
             <div>NOMZY</div>
           </div>
@@ -1024,58 +1010,97 @@
 
     <!--  -->
     <script>
-      document.getElementById("loginBtn").addEventListener("click", () => {
-        window.location.href = "login.html";
-      });
-      document.getElementById("signupBtn").addEventListener("click", () => {
-        window.location.href = "register.html";
-      });
+      function sanitize(str) {
+        return str.replace(/[<>"']/g, "");
+      }
 
-      async function checkLoginStatus() {
-        try {
-          const res = await fetch("http://100.74.28.37:8080/api/main", {
-            method: "GET",
-            credentials: "include", // 세션 유지 필수!
-          });
+      function updateHeaderUI() {
+        const nickname = localStorage.getItem("nickname");
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-          if (!res.ok) throw new Error("로그인 필요");
+        const loginBtn = document.getElementById("loginBtn");
+        const signupBtn = document.getElementById("signupBtn");
+        const nicknameSpan = document.getElementById("nicknameText"); // ✅ 수정
+        const headerDash = document.getElementById("headerDash");
 
-          const data = await res.json();
-          const nickname = data.nickname;
+        if (isLoggedIn && nickname) {
+          const safeNickname = sanitize(nickname);
+          nicknameSpan.textContent = safeNickname;
 
-          // 로그인 상태 → 닉네임 표시 + 로그인/회원가입 숨김
-          document.getElementById("nicknameText").innerText = nickname;
-          document.getElementById("nicknameBtn").style.display = "inline-block";
-          document.getElementById("dropdownMenu").style.display = "block";
+          if (loginBtn) loginBtn.style.display = "none";
+          if (signupBtn) signupBtn.style.display = "none";
+          if (headerDash) headerDash.style.display = "none";
+        } else {
+          nicknameSpan.textContent = "";
 
-          document.getElementById("loginBtn").style.display = "none";
-          document.getElementById("signupBtn").style.display = "none";
-          document.getElementById("headerDash").style.display = "none";
-        } catch (err) {
-          // 비로그인 상태 → 닉네임/드롭다운 숨기고 로그인/회원가입만 보이기
-          document.getElementById("nicknameBtn").style.display = "none";
-          document.getElementById("dropdownMenu").style.display = "none";
-
-          document.getElementById("loginBtn").style.display = "inline-block";
-          document.getElementById("signupBtn").style.display = "inline-block";
-          document.getElementById("headerDash").style.display = "inline-block";
+          if (loginBtn) loginBtn.style.display = "inline";
+          if (signupBtn) signupBtn.style.display = "inline";
+          if (headerDash) headerDash.style.display = "inline";
         }
       }
 
-      window.addEventListener("DOMContentLoaded", checkLoginStatus);
+      async function handleLogout() {
+        try {
+          const res = await fetch("http://100.74.28.37:8080/api/logout", {
+            method: "POST",
+          });
 
-      // 드롭다운 토글
-      document.getElementById("nicknameBtn").addEventListener("click", function (e) {
-        e.stopPropagation();
-        const dropdown = document.getElementById("dropdownMenu");
-        this.classList.toggle("active");
-        dropdown.classList.toggle("show");
-      });
+          if (!res.ok) {
+            alert("서버 로그아웃 실패");
+            return;
+          }
 
-      // 바깥 클릭 시 드롭다운 닫기
-      document.addEventListener("click", function () {
-        document.getElementById("dropdownMenu").classList.remove("show");
-        document.getElementById("nicknameBtn").classList.remove("active");
+          localStorage.removeItem("nickname");
+          localStorage.setItem("isLoggedIn", "false");
+
+          alert("로그아웃 되었습니다.");
+          updateHeaderUI();
+          window.location.reload();
+        } catch (err) {
+          alert("로그아웃 중 오류: " + err.message);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        updateHeaderUI();
+
+        const nickname = localStorage.getItem("nickname");
+        const mypageLink = document.getElementById("mypageLink");
+
+        if (nickname && mypageLink) {
+          mypageLink.href = `http://100.102.46.122:5500/mypage/view.html?nickname=${encodeURIComponent(nickname)}`;
+        } else if (mypageLink) {
+          mypageLink.href = "#";
+          mypageLink.addEventListener("click", () => {
+            alert("로그인 후 마이페이지에 접근 가능합니다.");
+          });
+        }
+
+        document.getElementById("loginBtn")?.addEventListener("click", () => {
+          window.location.href = "login.html";
+        });
+
+        document.getElementById("signupBtn")?.addEventListener("click", () => {
+          window.location.href = "register.html";
+        });
+
+        document.getElementById("logoutBtn")?.addEventListener("click", handleLogout);
+
+        // 드롭다운 토글
+        document.getElementById("nicknameBtn")?.addEventListener("click", function (e) {
+          e.stopPropagation();
+          const dropdown = document.getElementById("dropdownMenu");
+          this.classList.toggle("active");
+          dropdown.classList.toggle("show");
+        });
+
+        // 바깥 클릭 시 드롭다운 닫기
+        document.addEventListener("click", function () {
+          const dropdown = document.getElementById("dropdownMenu");
+          const btn = document.getElementById("nicknameBtn");
+          dropdown.classList.remove("show");
+          btn.classList.remove("active");
+        });
       });
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -1216,7 +1241,7 @@
       // (실제 서비스에선 이 부분에서 fetch/AJAX 등으로 서버에서 정보 받아와야 함)
       // 예시 데이터: 현 사용자, 기타 접속자(정렬)
       const currentUser = "홍민기";
-      let otherUsers = ["박성순", "최대한", "김현수"];
+      let otherUsers = ["박성순", "최대한", "이광욱"];
 
       // (현 사용자 제외하고 접속자 정렬, 닉네임 오름차순)
       otherUsers = otherUsers.filter((u) => u !== currentUser).sort();
@@ -1270,23 +1295,23 @@
 
       // 오늘 상세 날씨 박스 내용 (요일 추가)
       document.getElementById("todayDetail").innerHTML = `
-      <div class="weather-today-title">${todayDetail.date} (${todayDetail.day}) · ${todayDetail.location}</div>
-      <div class="weather-today-info">
-        오늘 날씨: ${todayDetail.main} / ${todayDetail.temp}°C
-      </div>
-      <div class="weather-today-etc">
-        습도: ${todayDetail.humidity}%<br>
-        체감: ${todayDetail.feel}°C<br>
-        강수확률: ${todayDetail.pop}%
-      </div>
-    `;
+          <div class="weather-today-title">${todayDetail.date} (${todayDetail.day}) · ${todayDetail.location}</div>
+          <div class="weather-today-info">
+            오늘 날씨: ${todayDetail.main} / ${todayDetail.temp}°C
+          </div>
+          <div class="weather-today-etc">
+            습도: ${todayDetail.humidity}%<br>
+            체감: ${todayDetail.feel}°C<br>
+            강수확률: ${todayDetail.pop}%
+          </div>
+        `;
 
       // 실시간 오늘 날씨 (간단)
       document.getElementById("weatherInfo").innerHTML = `
-      <div class="weather-main">${todayDetail.main} ☁️</div>
-      <div class="weather-temp">${todayDetail.temp}°C</div>
-      <div class="weather-location">${todayDetail.location}</div>
-    `;
+          <div class="weather-main">${todayDetail.main} ☁️</div>
+          <div class="weather-temp">${todayDetail.temp}°C</div>
+          <div class="weather-location">${todayDetail.location}</div>
+        `;
 
       // 1주일(요일별) 날씨 리스트
       const weekListHtml = weekWeather
@@ -1294,21 +1319,21 @@
           // 오늘 요일과 같은 경우 강조
           const isToday = item.day === todayDay;
           return `
-        <div class="weather-week-day${isToday ? " today" : ""}">
-          <span>${item.day}</span>
-          <span class="icon">${item.icon}</span>
-          <span>${item.main}</span>
-          <span class="weather-week-temp">${item.temp}°C</span>
-        </div>
-      `;
+            <div class="weather-week-day${isToday ? " today" : ""}">
+              <span>${item.day}</span>
+              <span class="icon">${item.icon}</span>
+              <span>${item.main}</span>
+              <span class="weather-week-temp">${item.temp}°C</span>
+            </div>
+          `;
         })
         .join("");
       document.getElementById("weatherWeek").innerHTML = `
-      <div class="weather-week-title">1주일 요일별 날씨</div>
-      <div class="weather-week-list">
-        ${weekListHtml}
-      </div>
-    `;
+          <div class="weather-week-title">1주일 요일별 날씨</div>
+          <div class="weather-week-list">
+            ${weekListHtml}
+          </div>
+        `;
 
       /**
        * 실제 서비스에선
