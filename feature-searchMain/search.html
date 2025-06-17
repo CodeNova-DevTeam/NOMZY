@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMZY : 검색결과</title>
+    <link rel="stylesheet" href="/feature-searchMain/search.css">
+    <script type="module" src="/feature-searchMain/search.js"></script>
+
+</head>
+
+<body>
+
+  <main>
+    <section class="search-result">
+      <h2 id="searchQueryDisplay">검색 결과</h2>
+
+      <!-- 🔽 정렬 셀렉터 추가 -->
+      <div class="sort-container">
+        <label for="sortOption">정렬 기준:</label>
+        <select id="sortOption">
+          <option value="default">기본 정렬</option>
+          <option value="rating">평점순</option>
+          <option value="favorite">즐겨찾기</option>
+          <option value="reviews">리뷰 많은 순</option>
+        </select>
+      </div>
+
+      <div class="store-list-container">
+        <!-- JS에서 가게 카드가 여기에 추가됩니다 -->
+      </div>
+    </section>
+  </main>
+    
+    
+</body>
+</html>
