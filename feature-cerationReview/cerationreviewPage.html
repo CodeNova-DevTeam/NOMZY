@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMZE : 리뷰작성</title>
+    <link rel="stylesheet" href="/feature-cerationReview/cerationReviewPage.css">
+    <script defer src="/feature-cerationReview/cerationReviewPage.js"></script>
+</head>
+<body>
+    <form class="review-form" id="reviewForm">
+    <h2>리뷰 작성</h2>
+    <div class="form-group">
+      <label for="region">지역 (서울시 동):</label>
+      <select id="region" required></select>
+    </div>
+    <div class="form-group">
+      <label for="restaurant">음식점 이름 (20자 이내):</label>
+      <input type="text" id="restaurant" maxlength="20" required />
+    </div>
+    <div class="form-group">
+      <label for="category">음식 카테고리:</label>
+      <select id="category" required>
+        <option value="">카테고리 선택</option>
+        <option value="한식">한식</option>
+        <option value="일식">일식</option>
+        <option value="중식">중식</option>
+        <option value="양식">양식</option>
+        <option value="카페">카페</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="rating">별점 (0.0 ~ 5.0):</label>
+      <input type="number" id="rating" step="0.1" min="0" max="5" required />
+    </div>
+    <div class="form-group">
+      <label for="title">리뷰 제목:</label>
+      <input type="text" id="title" required />
+    </div>
+    <div class="form-group">
+      <label for="content">리뷰 내용:</label>
+      <textarea id="content" rows="4" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">이미지 업로드:</label>
+      <input type="file" id="image" accept="image/*" />
+    </div>
+    <div class="form-group">
+      <button type="submit">리뷰 제출</button>
+    </div>
+  </form>
+</body>
+</html>
