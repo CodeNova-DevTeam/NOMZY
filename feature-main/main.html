@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOMZY</title>
+    <link rel="icon" href="../public/img/logo.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="/static/css/setStyle.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/header.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/mainMenu.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/userMenu.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/sidebar.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/searchbar.css" /> -->
+    <!-- <link rel="stylesheet" href="/static/css/footer.css" /> -->
+    <!-- <script defer src="/src/js/sidebar.js"></script> -->
+    <!-- <script defer src="/src/js/usermenu.js"></script> -->
+    <!-- <script defer src="/src/js/searchbar.js"></script> -->
+
+    <style>
+      /* 모든 속성 기본 설정 */
+      * {
+        margin: 0;
+        /* 바깥여백을 0으로 초기화 */
+        padding: 0;
+        /* 안쪽여백을 0으로 초기화 */
+        box-sizing: border-box;
+        /* 패딩, 보더를 포함해 크기 계산(레이아웃 깨짐 방지) */
+      }
+
+      /* 전체 페이지 공통 속성 설정 */
+      html,
+      body {
+        min-height: 100vh;
+        /* 최소 높이를 브라우저 화면 100%로 설정 */
+        height: 100%;
+        /* 높이 100%로 설정(전체 채우기) */
+        transition: padding-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 오른쪽 패딩 변화 시(예: 스크롤바 등장/사라짐) 0.25초 부드럽게 전환 */
+      }
+
+      /* body태그 속성 설정 */
+      body {
+        display: flex;
+        /* 플렉스 박스 레이아웃 사용(자식 정렬) */
+        flex-direction: column;
+        /* 세로 방향으로 쌓기 */
+        background: linear-gradient(120deg, #191a1f 60%, #24272f 100%);
+        /* 120도 각도로, 60%까지 짙은 네이비, 100%에 조금 더 밝은 남색로 그라데이션 */
+        background-repeat: no-repeat;
+        /* 배경 반복 없음 */
+        background-size: cover;
+        /* 배경을 화면 전체에 꽉 채우기 */
+        background-attachment: fixed;
+        /* 스크롤해도 배경 고정(패럴럭스 효과 느낌) */
+      }
+
+      /*  */
+
+      /* .left-bar,
+      .main-section,
+      .right-bar {
+        background: rgba(30, 36, 44, 0.64);
+        box-shadow: 0 10px 40px #0008, 0 1px 18px #2224, inset 0 5px 32px #7a7fa644;
+        backdrop-filter: blur(5px);
+        border: 1.5px solid #3a4048;
+      } */
+
+      /*  */
+
+      header {
+        background-color: #191a1f4b;
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      /* 헤더 상단 영역 (로고, 로그인, 회원가입) */
+      .header-top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 3rem; /* 높이 고정(혹은 원하는 만큼) */
+        width: 100%;
+        position: relative;
+      }
+
+      /* 홈페이지명 중앙 정렬 */
+      .header-center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #86ebff;
+        letter-spacing: 0.05em;
+        user-select: none;
+        pointer-events: none; /* 클릭불가, 중앙배치만 역할 */
+      }
+
+      /* 로그인 | 회원가입(좌측) */
+      .header-left {
+        display: flex;
+        align-items: center;
+      }
+
+      /* 버튼-링크 스타일: 배경 없음, 마우스 올릴 때만 색상 */
+      .header-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 0.7rem;
+        padding: 0 0.4rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.25s;
+        outline: none;
+      }
+      .header-btn:hover,
+      .header-btn:focus {
+        color: #86ebff;
+      }
+
+      .header-dash {
+        font-size: 0.75rem;
+        color: white;
+      }
+
+      .user-name-button {
+        position: relative;
+        background: none;
+        border: none;
+        color: #86ebff;
+        font-size: 0.93rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 16px;
+        border-radius: 18px;
+        transition: background 0.17s;
+      }
+
+      .user-name-button:hover,
+      .user-name-button.active {
+        background: #232427;
+      }
+
+      .dropdown-icon {
+        font-size: 0.87em;
+        margin-left: 4px;
+        transition: transform 0.2s;
+      }
+
+      .user-name-button.active .dropdown-icon {
+        transform: rotate(-180deg);
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 2.5em;
+        left: 0;
+        min-width: 110px;
+        background: radial-gradient(#3d4149 60%, #232427 100%);
+        box-shadow: 0 6px 28px #22222255;
+        border-radius: 12px;
+        z-index: 200;
+        padding: 7px 0;
+      }
+
+      .dropdown-menu.show {
+        display: block;
+        animation: dropdownFadeIn 0.22s;
+      }
+
+      .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 8px 17px;
+        color: white;
+        text-align: left;
+        background: none;
+        border: none;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background 0.13s;
+      }
+      .dropdown-item:hover {
+        /* background: #29334b; */
+        color: #86ebff;
+      }
+
+      /* 오른쪽 영역: 비워둘 경우 최소사이즈 */
+      .header-right {
+        min-width: 24px;
+      }
+
+      /* ---- 서치바 (헤더 아래) ---- */
+      .search-bar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border-radius: 12px;
+        margin: 0 auto 0.5rem auto;
+        padding: 0 0 0.75rem 0;
+      }
+
+      .search-form {
+        position: relative;
+        width: 50vw;
+        min-width: 260px;
+        max-width: 640px;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-form input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 1rem;
+        font-size: 1.01rem;
+        border: 1.5px solid #86ebff;
+        border-radius: 16px;
+        color: #111;
+        outline: none;
+        background: white;
+        transition: border 0.25s, box-shadow 0.25s;
+      }
+
+      .search-form input::placeholder {
+        color: #b3c8d8;
+        letter-spacing: 0.01em;
+      }
+
+      .search-form input:hover {
+        box-shadow: 1px 1px 4px rgba(81, 81, 81, 0.14);
+      }
+
+      .search-form input:focus {
+        border: 1.5px solid #54c3fc;
+        box-shadow: 0 2px 8px rgba(81, 150, 200, 0.1);
+      }
+
+      .search-button {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .search-button img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      /*  */
+      /*  */
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0; /* 오른쪽에서 나옴. 왼쪽이면 left:0, right:auto */
+        width: 15rem;
+        max-width: 90vw;
+        height: 100vh;
+        background: white;
+        /* background: radial-gradient(#3d4149 60%, #232427 100%); */
+        box-shadow: -2px 0 24px #0008;
+        z-index: 100;
+        transform: translateX(100%); /* 오른쪽 화면 밖에 있음 */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar.active {
+        box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2);
+        transform: translateX(0);
+      }
+
+      .sidebar-header {
+        flex-shrink: 0;
+        padding: 1rem;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.256);
+        mask-image: linear-gradient(to bottom, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+        overflow: hidden;
+      }
+
+      .sidebar-close {
+        position: absolute;
+        border: 1px solid black;
+        top: 1.3rem;
+        right: 1rem;
+        font-size: 1.2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.25s;
+      }
+
+      .sidebar-close:hover {
+        color: #cacaca;
+      }
+
+      .sidebar-main {
+        flex-grow: 1;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        scrollbar-width: thin;
+        scrollbar-color: #00000023 transparent;
+        mask-image: linear-gradient(to bottom, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+      }
+
+      .sidebar-footer {
+        flex-shrink: 0;
+        padding: 10%;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0);
+      }
+
+      .logout-button {
+        display: none;
+        position: absolute;
+        font-size: 0.9rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        bottom: 30%;
+        right: 10%;
+        background-color: rgba(255, 255, 255, 0.256);
+        transition: color 0.25s;
+      }
+
+      .logout-button:hover {
+        color: #cacaca;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(20, 20, 24, 0.46);
+        z-index: 50;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /*  */
+      /*  */
+
+      .menu-mainName {
+        font-size: 1.5rem;
+        font-weight: bold;
+        position: relative;
+        left: 0.3rem;
+        margin: 0;
+      }
+
+      .menu-mainbtn {
+        background: none;
+        border: none;
+        width: 100%;
+        font-size: 1rem;
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.256);
+      }
+
+      .menu-text {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(to right, #86ebff, #ffffff);
+        background-size: 0% 100%;
+        background-repeat: no-repeat;
+        background-position: left;
+        transition: background-size 0.4s ease, color 0.4s ease;
+        text-align: center;
+        padding: 1.4rem 0rem;
+        color: black;
+        font-size: 1rem;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        display: flex;
+      }
+
+      .menu-text:hover {
+        background-size: 100% 100%;
+        color: #cacaca;
+      }
+
+      /*  */
+      /*  */
+
+      .layout {
+        display: flex;
+        width: 100%;
+        min-height: 80vh; /* 헤더/푸터 높이 고려 */
+      }
+
+      .left-bar {
+        flex: 2 1 0;
+        /* 가로 너비를 20%로 지정 */
+        min-height: 100vh;
+        /* 최소 세로 길이를 화면 전체 높이로 지정 */
+        display: flex;
+        /* flexbox 레이아웃 적용-> 자식 요소들을 flex 아이템으로 만듦 */
+        flex-direction: column;
+        /* flex 아이템들을 세로로 쌓음 */
+        align-items: center;
+        /* flex 아이템들을 가로 방향으로 중앙 정렬 */
+        /* padding-top: 70px; */
+        /* 위쪽에 70px의 여백 추가 */
+        /* box-shadow: 2px 0 16px #0001; */
+        /* 오른쪽으로 2px, 아래로 0, 흐림 16px, 아주 약한 그림자 효과(#0001) */
+      }
+
+      /* --- 동그란 3D 시계 박스 --- */
+      .circle-clock-box {
+        width: 80%;
+        /* 시계 박스의 가로 크기 80% */
+        height: 13%;
+        /* 시계 박스의 세로 크기 11% */
+        background: radial-gradient(circle at 65% 35%, #3d4149 60%, #232427 100%);
+        /* 65% 35% 위치에서 시작하는 원형(radial) 그라데이션: 중앙은 회색, 바깥은 거의 검정에 가깝게 */
+        border-radius: 50%;
+        /* 정사각형을 완전히 동그랗게(원형) 만듦 */
+        box-shadow: 0 12px 36px #101214cc, /* 바깥쪽 아래로 퍼지는 어두운 그림자 */ 0 4px 22px #34354b55,
+          /* 바깥쪽 좀 더 연한 그림자 */ inset 0 12px 38px #6d7587b8,
+          /* 위쪽 안쪽에서 아래로 퍼지는 푸른빛 그림자 (입체감 강조) */ inset 0 -8px 18px #181a1eb7;
+        /* 아래쪽 안쪽에서 위로 퍼지는 어두운 그림자 (입체감, 음영) */
+        margin: 6rem auto 0;
+        /* 위쪽에 6rem 여백, 좌우는 자동 중앙 정렬, 아래는 0 */
+        display: flex;
+        /* flexbox 레이아웃 적용 */
+        flex-direction: column;
+        /* 세로방향 정렬 */
+        align-items: center;
+        /* 가로중앙 정렬 */
+        justify-content: center;
+        /* 세로중앙 정렬 */
+        font-family: "Handlee", cursive;
+        /* 손글씨 느낌의 구글 폰트 적용, 없으면 cursive 계열로 대체 */
+        position: relative;
+        /* 가상요소 위치 지정 위해 relative 설정 */
+        transition: box-shadow 0.25s;
+        /* box-shadow 변경시 0.25초 동안 부드럽게 전환 */
+
+        margin-bottom: 4rem;
+      }
+
+      /* 마우스 오버(hover) 시 박스 그림자 강조 - 살짝 빛나 보이는 효과 */
+      .circle-clock-box:hover {
+        box-shadow: 0 15px 40px #232427ee, /* 바깥쪽 더 강한 그림자(밑으로 더 퍼짐) */ 0 8px 30px #34354baa,
+          /* 중간 그림자도 더 강조 */ inset 0 16px 32px #6d7587cc,
+          /* 안쪽 위쪽 하이라이트도 더 밝게 */ inset 0 -16px 36px #181a1ec9; /* 안쪽 아래쪽 어두운 그림자도 더 강조 */
+      }
+
+      /* 시계 시간 스타일 */
+      .clock-time {
+        font-size: 2rem;
+        /* 폰트 크기 2rem */
+        color: #ffffff;
+        /* 흰색 글자 */
+        letter-spacing: 0.1em;
+        /* 글자 사이 0.1rem 간격 */
+        font-weight: bold;
+        /* 굵은 글자 */
+        text-shadow: 0 2px 18px #82d6ffcc, /* 파란빛 아래로 퍼지는 그림자 (네온 느낌) */ 0 6px 20px #1f69ad77,
+          /* 어두운 파랑 아래로 더 퍼짐 */ 2px 2px 0 #212f46cc, /* 글자 오른쪽 아래로 어두운 파랑 경계 */ 0 0px 0 #fff; /* 추가 흰색 테두리 */
+        filter: drop-shadow(0 2px 8px #3dc7e977);
+        /* 전체에 한 번 더 아래로 푸른 drop-shadow */
+        user-select: none;
+        /* 글자 이벤트 무시시 */
+        z-index: 2;
+        /* 다른 요소 위에 표시 */
+      }
+
+      /* 원형 박스 위쪽 하이라이트(반짝이는 반사 효과) */
+      .circle-clock-box::before {
+        content: "";
+        /* 가상 요소 내용 없음 */
+        position: absolute;
+        /* 부모 기준 위치 절대 지정 */
+        top: 3rem;
+        /* 위에서 3rem */
+        left: 5.5rem;
+        /* 왼쪽에서 5.5rem */
+        width: 3.5rem;
+        /* 너비 3.5rem */
+        height: 1rem;
+        /* 높이 1rem */
+        background: linear-gradient(135deg, #fff 60%, #82e2ff77 100%);
+        /* 흰색~연한 파랑 계열의 그라데이션 (빛 번짐 표현) */
+        opacity: 0.15;
+        /* 투명도 15% */
+        border-radius: 80px 25px 90px 30px;
+        /* 모서리 둥글게 (타원 모양) */
+        filter: blur(2px);
+        /* 가장자리를 부드럽게 흐리기 */
+        z-index: 1;
+        /* 글자 아래, 배경 위에 위치 */
+        pointer-events: none;
+        /* 마우스 이벤트 무시 */
+      }
+
+      /* 원형 박스 아래쪽 바닥 그림자(3D효과) */
+      .circle-clock-box::after {
+        content: "";
+        /* 가상 요소 내용 없음 */
+        position: absolute;
+        /* 부모 기준 위치 절대 지정 */
+        left: 50%;
+        /* 왼쪽 기준 50% (가운데) */
+        bottom: 22px;
+        /* 아래에서 22px 위 */
+        transform: translateX(-50%);
+        /* 정확히 가운데 정렬 */
+        width: 86px;
+        /* 그림자 너비 86px */
+        height: 14px;
+        /* 그림자 높이 14px */
+        background: radial-gradient(ellipse at center, #7ed6ff40 60%, transparent 100%);
+        /* 중앙이 연한 파랑, 바깥쪽은 투명한 타원 그림자 */
+        opacity: 0.62;
+        /* 투명도 62% */
+        border-radius: 60%;
+        /* 타원 모양 */
+        filter: blur(1.1px);
+        /* 가장자리를 흐리게 */
+        z-index: 1;
+        /* 글자 아래, 배경 위에 위치 */
+      }
+
+      /* ---- 실시간 사용자 박스 ---- */
+      .user-list-box {
+        width: 13rem;
+        background: radial-gradient(circle at 65% 35%, #3d4149 60%, #232427 100%);
+        border-radius: 22px;
+        box-shadow: 0 4px 24px #18181a88, 0 1.5px 7px #44444b44, inset 0 3px 16px #60667560;
+        padding: 26px 20px 22px 20px;
+        color: #f6f8fa;
+        font-family: "Handlee", cursive;
+        display: flex;
+        flex-direction: column;
+      }
+      .current-user {
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: #8ee0ff;
+        margin-bottom: 7px;
+        letter-spacing: 0.04em;
+        word-break: break-all;
+      }
+      .user-divider {
+        border: none;
+        border-top: 2px solid #28344d;
+        margin: 10px 0 16px 0;
+        opacity: 0.7;
+      }
+      .other-users-title {
+        font-size: 1rem;
+        color: #b8cee8;
+        margin-bottom: 6px;
+        margin-left: 2px;
+        letter-spacing: 0.04em;
+      }
+      .other-users-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .other-users-list li {
+        font-size: 0.75rem;
+        color: #e6ebff;
+        padding-left: 4px;
+        letter-spacing: 0.03em;
+        font-family: "Handlee", cursive;
+      }
+
+      .main-section {
+        flex: 6 1 0; /* 비율 6 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        min-width: 260px; /* 최소값 (선택사항) */
+      }
+
+      .photo-list {
+        display: flex;
+        flex-direction: column; /* 세로로 정렬 */
+        gap: 2rem; /* 사진끼리 간격 */
+        align-items: center; /* 사진 중앙 정렬 */
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .photo-item {
+        width: 96%; /* 사진이 박스 가로 거의 다 채움 */
+        max-width: 520px; /* 너무 커지지 않게 최대폭 제한 */
+        border-radius: 22px;
+        aspect-ratio: 4 / 3;
+        box-shadow: 0 8px 42px #0d0e0f50;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+        object-fit: cover;
+      }
+
+      .photo-item:hover {
+        box-shadow: 0 14px 60px #14306a99;
+      }
+
+      .photo-slot-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        align-items: center;
+        width: 100%;
+      }
+
+      .photo-slot {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.1rem;
+      }
+
+      .photo-item {
+        width: 96%;
+        max-width: 520px;
+        border-radius: 18px;
+        box-shadow: 0 6px 22px #b3b9c721;
+        object-fit: cover;
+      }
+
+      .quick-slot-list {
+        display: flex;
+        flex-direction: row;
+        gap: 3rem;
+        justify-content: center;
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .quick-slot {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: linear-gradient(135deg, #e4f4fa 60%, #bfe3fc 100%);
+        box-shadow: 0 2px 8px #8db8e415;
+        font-size: 1.4rem;
+        cursor: pointer;
+        transition: background 0.18s, transform 0.15s;
+      }
+      .quick-slot:hover {
+        background: linear-gradient(135deg, #a3eaff 80%, #c6e5fc 100%);
+        transform: scale(1.12);
+      }
+
+      .right-bar {
+        flex: 2 1 0;
+        width: 300px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 70px;
+      }
+
+      .weather-box {
+        width: 14rem;
+        background: radial-gradient(circle at 65% 35%, #3d4149 60%, #232427 100%);
+        border-radius: 16px; /* 더 소프트하게, 작은 박스처럼 */
+        box-shadow: 0 2px 16px #23242738, 0 1.5px 7px #0003, inset 0 2px 8px #57607733, inset 0 -2px 8px #181a1e66;
+        padding: 16px 12px 14px 12px; /* padding도 작은 박스와 맞춤 */
+        color: #f6f8fa;
+        font-family: "Handlee", cursive;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .weather-detail-today {
+        width: 100%;
+        background: linear-gradient(135deg, #24252b 85%, #191c21 100%);
+        border-radius: 16px;
+        padding: 16px 12px 12px 12px;
+        margin-bottom: 22px;
+        box-shadow: 0 2px 16px #3d414933, /* 부드러운 바깥 그림자 */ 0 1.5px 7px #0002, inset 0 3px 18px #a5cdf922,
+          /* 안쪽 빛 번짐 */ inset 0 -2px 8px #191c2177; /* 아래쪽 어둠 */
+        position: relative;
+        overflow: hidden;
+      }
+      .weather-detail-today::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 32px;
+        width: 54px;
+        height: 13px;
+        background: linear-gradient(120deg, #fff8 40%, #f3e69922 100%);
+        opacity: 0.15;
+        border-radius: 60px 15px 50px 13px;
+        filter: blur(2.5px);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .weather-detail-today::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+        width: 38px;
+        height: 7px;
+        background: radial-gradient(ellipse at center, #ffe16b22 60%, transparent 100%);
+        opacity: 0.25;
+        border-radius: 60%;
+        filter: blur(1.1px);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .weather-week {
+        width: 100%;
+        background: linear-gradient(135deg, #191c21cc 80%, #22252bcc 100%);
+        border-radius: 14px;
+        padding: 14px 11px;
+        margin-top: 12px;
+        box-shadow: 0 2px 12px #23242725, 0 1.5px 7px #22222222, inset 0 3px 12px #d8f0ff1a, inset 0 -2px 6px #191c2133;
+        color: #e3f2ff;
+        position: relative;
+        overflow: hidden;
+      }
+      .weather-week::before {
+        content: "";
+        position: absolute;
+        top: 7px;
+        left: 22px;
+        width: 44px;
+        height: 8px;
+        background: linear-gradient(120deg, #fff8 40%, #f3e69922 100%);
+        opacity: 0.11;
+        border-radius: 50px 12px 38px 13px;
+        filter: blur(2px);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .weather-week::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 7px;
+        transform: translateX(-50%);
+        width: 26px;
+        height: 6px;
+        background: radial-gradient(ellipse at center, #ffe16b22 60%, transparent 100%);
+        opacity: 0.21;
+        border-radius: 60%;
+        filter: blur(1px);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .weather-week-day {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1.01rem;
+        padding: 3.5px 0;
+        border-radius: 7px;
+        transition: background 0.18s;
+        background: linear-gradient(90deg, #22242b44 60%, #282b3366 100%);
+        /* 아주 연한 반투명 다크+빛 */
+        box-shadow: 0 1px 2px #23242708, 0 0.5px 2px #f6e79b11;
+      }
+
+      .weather-week-day.today {
+        background: linear-gradient(90deg, #37393388 60%, #ffe06333 100%);
+        color: #ffe063;
+        font-weight: bold;
+      }
+      .weather-week-day .icon {
+        font-size: 1.15em;
+        margin: 0 5px 0 2px;
+      }
+      .weather-week-temp {
+        min-width: 40px;
+        text-align: right;
+        color: #8ac6ff;
+        font-weight: bold;
+        font-size: 1.05em;
+      }
+
+      /*  */
+      /*  */
+
+      footer {
+        margin-top: 0;
+        text-align: center;
+        padding: 1%;
+        width: 100%;
+        font-size: 0.7rem;
+        color: white;
+      }
+
+      .footer-email {
+        margin-bottom: 0.25rem;
+      }
+
+      .mail-link {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .mail-link:hover {
+        color: #86ebff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- <div id="header"></div> -->
+      <!--  -->
+      <header>
+        <div class="header-top">
+          <div class="header-left">
+            <!-- 로그인/회원가입 버튼 (비로그인 상태에서만 보여야 함) -->
+            <a id="loginBtn" class="header-btn none-login-btn">로그인</a>
+            <span id="headerDash" class="header-dash"> | </span>
+            <a id="signupBtn" class="header-btn none-login-btn">회원가입</a>
+
+            <!-- 로그인 후 보여줄 닉네임 + 드롭다운 -->
+            <button id="nicknameBtn" class="user-name-button"><span id="nicknameText"></span> ▼</button>
+            <div id="dropdownMenu" class="dropdown-menu">
+              <a id="mypageLink" class="dropdown-item">마이페이지</a>
+              <button id="logoutBtn" class="dropdown-item" onclick="handleLogout()">로그아웃</button>
+            </div>
+          </div>
+
+          <div class="header-center">
+            <div>NOMZY</div>
+          </div>
+          <div class="header-right"></div>
+        </div>
+        <div class="search-bar">
+          <form onsubmit="handleSearch(event)" class="search-form" autocomplete="on">
+            <input list="suggestions" type="text" id="searchInput" placeholder="찾으시는 맛집을 입력해 주세요." />
+            <datalist id="suggestions">
+              <option value="삼겹살" />
+              <option value="파스타" />
+              <option value="카페" />
+              <option value="분식" />
+              <option value="일식" />
+            </datalist>
+            <button type="submit" class="search-button">
+              <img src="../public/img/search.png" alt="검색" />
+            </button>
+          </form>
+        </div>
+      </header>
+
+      <!-- <div id="sidebar"></div> -->
+      <!--  -->
+
+      <div class="sidebar-overlay" onclick="closeSidebar()" id="sidebarOverlay"></div>
+
+      <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <h3 class="menu-mainName">전체 메뉴</h3>
+          <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+        </div>
+
+        <div class="sidebar-main">
+          <a href="/templates/mainpage.html" class="menu-mainbtn menu-text">홈</a>
+          <a href="#" class="menu-mainbtn menu-text">메뉴종류</a>
+          <a href="#" class="menu-mainbtn menu-text">단체모임</a>
+          <a href="#" class="menu-mainbtn menu-text">소모임</a>
+          <a href="#" class="menu-mainbtn menu-text">성별</a>
+          <a href="#" class="menu-mainbtn menu-text">나이</a>
+          <a href="#" class="menu-mainbtn menu-text">지역별 추천</a>
+          <a href="#" class="menu-mainbtn menu-text">별점랭킹</a>
+          <a href="#" class="menu-mainbtn menu-text">데이트식당추천</a>
+          <a href="#" class="menu-mainbtn menu-text">비건</a>
+          <a href="#" class="menu-mainbtn menu-text">댓글후기</a>
+          <a href="#" class="menu-mainbtn menu-text">홈페이지 소개</a>
+        </div>
+
+        <div class="sidebar-footer">
+          <button id="logoutBtn" class="logout-button" onclick="handleLogout()">로그아웃</button>
+        </div>
+      </div>
+
+      <!-- <div id="main"></div> -->
+      <!--  -->
+
+      <div class="layout">
+        <aside class="left-bar">
+          <section class="circle-clock-box">
+            <div class="clock-time" id="clock"></div>
+          </section>
+
+          <section class="user-list-box">
+            <div class="current-user" id="currentUser"></div>
+            <hr class="user-divider" />
+            <div class="other-users-title">접속자 목록</div>
+            <ul class="other-users-list" id="userList"></ul>
+          </section>
+        </aside>
+
+        <main class="main-section">
+          <section class="main-content">
+            <div class="photo-slot-list">
+              <div class="photo-slot">
+                <img src="../public/img/background1.jpg" alt="meat" class="photo-item" />
+                <div class="quick-slot-list">
+                  <button class="quick-slot">🍴</button>
+                  <button class="quick-slot">💬</button>
+                  <button class="quick-slot">⭐</button>
+                  <button class="quick-slot">📷</button>
+                  <button class="quick-slot">🔗</button>
+                </div>
+              </div>
+              <div class="photo-slot">
+                <img src="../public/img/background2.jpg" alt="poultry" class="photo-item" />
+                <div class="quick-slot-list">
+                  <button class="quick-slot">🍴</button>
+                  <button class="quick-slot">💬</button>
+                  <button class="quick-slot">⭐</button>
+                  <button class="quick-slot">📷</button>
+                  <button class="quick-slot">🔗</button>
+                </div>
+              </div>
+              <div class="photo-slot">
+                <img src="../public/img/background3.jpg" alt="seafood" class="photo-item" />
+                <div class="quick-slot-list">
+                  <button class="quick-slot">🍴</button>
+                  <button class="quick-slot">💬</button>
+                  <button class="quick-slot">⭐</button>
+                  <button class="quick-slot">📷</button>
+                  <button class="quick-slot">🔗</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <aside class="right-bar">
+          <section class="weather-box">
+            <!-- 오늘의 상세 날씨 (상단) -->
+            <div class="weather-detail-today" id="todayDetail"></div>
+            <!-- 간단 실시간 날씨 -->
+            <div class="weather-title">실시간 날씨</div>
+            <div class="weather-info" id="weatherInfo"></div>
+            <!-- 1주일(요일별) 날씨 -->
+            <div class="weather-week" id="weatherWeek"></div>
+          </section>
+        </aside>
+      </div>
+
+      <!-- <div id="footer"></div> -->
+      <footer>
+        <div class="footer-email">
+          <span>Email : </span>
+          <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" class="mail-link"
+            >CodeNovaTeam@gmail.com</a
+          >
+        </div>
+        <p class="footer-copy">&copy; TEAM CODENOVA</p>
+      </footer>
+    </div>
+
+    <!--  -->
+    <script>
+      function sanitize(str) {
+        return str.replace(/[<>"']/g, "");
+      }
+
+      function updateHeaderUI() {
+        const nickname = localStorage.getItem("nickname");
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        const loginBtn = document.getElementById("loginBtn");
+        const signupBtn = document.getElementById("signupBtn");
+        const nicknameSpan = document.getElementById("nicknameText"); // ✅ 수정
+        const headerDash = document.getElementById("headerDash");
+
+        if (isLoggedIn && nickname) {
+          const safeNickname = sanitize(nickname);
+          nicknameSpan.textContent = safeNickname;
+
+          if (loginBtn) loginBtn.style.display = "none";
+          if (signupBtn) signupBtn.style.display = "none";
+          if (headerDash) headerDash.style.display = "none";
+        } else {
+          nicknameSpan.textContent = "";
+
+          if (loginBtn) loginBtn.style.display = "inline";
+          if (signupBtn) signupBtn.style.display = "inline";
+          if (headerDash) headerDash.style.display = "inline";
+        }
+      }
+
+      async function handleLogout() {
+        try {
+          const res = await fetch("http://100.74.28.37:8080/api/logout", {
+            method: "POST",
+          });
+
+          if (!res.ok) {
+            alert("서버 로그아웃 실패");
+            return;
+          }
+
+          localStorage.removeItem("nickname");
+          localStorage.setItem("isLoggedIn", "false");
+
+          alert("로그아웃 되었습니다.");
+          updateHeaderUI();
+          window.location.reload();
+        } catch (err) {
+          alert("로그아웃 중 오류: " + err.message);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        updateHeaderUI();
+
+        const nickname = localStorage.getItem("nickname");
+        const mypageLink = document.getElementById("mypageLink");
+
+        if (nickname && mypageLink) {
+          mypageLink.href = `http://100.102.46.122:5500/mypage/view.html?nickname=${encodeURIComponent(nickname)}`;
+        } else if (mypageLink) {
+          mypageLink.href = "#";
+          mypageLink.addEventListener("click", () => {
+            alert("로그인 후 마이페이지에 접근 가능합니다.");
+          });
+        }
+
+        document.getElementById("loginBtn")?.addEventListener("click", () => {
+          window.location.href = "login.html";
+        });
+
+        document.getElementById("signupBtn")?.addEventListener("click", () => {
+          window.location.href = "register.html";
+        });
+
+        document.getElementById("logoutBtn")?.addEventListener("click", handleLogout);
+
+        // 드롭다운 토글
+        document.getElementById("nicknameBtn")?.addEventListener("click", function (e) {
+          e.stopPropagation();
+          const dropdown = document.getElementById("dropdownMenu");
+          this.classList.toggle("active");
+          dropdown.classList.toggle("show");
+        });
+
+        // 바깥 클릭 시 드롭다운 닫기
+        document.addEventListener("click", function () {
+          const dropdown = document.getElementById("dropdownMenu");
+          const btn = document.getElementById("nicknameBtn");
+          dropdown.classList.remove("show");
+          btn.classList.remove("active");
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const scrollContainer = document.querySelector(".sidebar-main");
+        const itemHeight = document.querySelector(".menu-text")?.offsetHeight || 50;
+
+        let isScrolling = false;
+        let scrollQueue = 0;
+
+        if (scrollContainer) {
+          scrollContainer.addEventListener(
+            "wheel",
+            function (e) {
+              e.preventDefault();
+
+              const direction = e.deltaY > 0 ? 1 : -1;
+              scrollQueue += direction;
+
+              if (!isScrolling) {
+                smoothScrollStep();
+              }
+            },
+            { passive: false }
+          );
+        }
+
+        function smoothScrollStep() {
+          if (scrollQueue === 0) {
+            isScrolling = false;
+            return;
+          }
+
+          isScrolling = true;
+          const direction = scrollQueue > 0 ? 1 : -1;
+          scrollQueue -= direction;
+
+          scrollContainer.scrollBy({
+            top: direction * itemHeight,
+            behavior: "smooth",
+          });
+
+          // 스크롤 애니메이션이 끝날 시간만큼 기다림 (0.3초 정도)
+          setTimeout(() => {
+            smoothScrollStep();
+          }, 50);
+        }
+      });
+
+      // document.addEventListener("keydown", (e) => {
+      //   if (e.key === "Escape") {
+      //     if (document.body.classList.contains("mega-menu-open")) {
+      //       hideAllMegaMenus();
+      //       if (megaMenuTriggers.length > 0) moveUnderline(megaMenuTriggers[0]);
+      //     }
+      //   }
+      // });
+      function updateLogoutBtn() {
+        const logoutBtn = document.getElementById("logoutBtn");
+        // 로그인한 상태에서만 보여주기
+        if (!isLoggedIn) return;
+        logoutBtn.style.display = isLoggedIn ? "block" : "none";
+      }
+
+      document.addEventListener("mousemove", function (e) {
+        // const windowWidth = window.innerWidth - document.documentElement.clientWidth;
+        const sidebar = document.getElementById("sidebar");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+        // if (e.clientX > windowWidth * 0.95) {
+        //   sidebar.classList.add("active");
+        //   sidebarOverlay.classList.add("active");
+        //   document.body.style.overflow = "hidden";
+        // }
+        if (e.clientX > window.innerWidth * 0.95) {
+          sidebar.classList.add("active");
+          sidebarOverlay.classList.add("active");
+
+          // 스크롤 막기 + 오른쪽 패딩 (스크롤바 자연스럽게)
+          const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+          document.body.style.paddingRight = scrollBarWidth + "px";
+          setTimeout(() => {
+            document.body.style.overflow = "hidden";
+          }, 4); // 0~50ms 사이면 자연스러움
+
+          updateLogoutBtn();
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", updateLogoutBtn);
+
+      // 오버레이 클릭 시 닫기 (*** 이게 있어야 닫힘)
+      document.getElementById("sidebarOverlay").addEventListener("click", closeSidebar);
+
+      // ESC키로 닫기
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeSidebar();
+        }
+      });
+
+      // 사이드바 닫기 함수
+      function closeSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const sidebarOverlay = document.getElementById("sidebarOverlay");
+        sidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+
+        // 1. overflow 먼저 해제
+        document.body.style.overflow = "";
+        // 2. 트랜지션 효과로 padding-right 해제 (딜레이와 맞춤)
+        setTimeout(() => {
+          document.body.style.paddingRight = "";
+        }, 250); // CSS transition 시간과 맞춰줌(0.25s)
+      }
+
+      const suggestionList = document.querySelector(".suggestion-list");
+      const items = document.querySelectorAll(".suggestion-item");
+
+      items.forEach((item) => {
+        item.addEventListener("mouseenter", () => {
+          suggestionList.classList.add("hovered");
+        });
+        item.addEventListener("mouseleave", () => {
+          suggestionList.classList.remove("hovered");
+        });
+      });
+
+      function updateClock() {
+        const now = new Date();
+        const hour = String(now.getHours()).padStart(2, "0");
+        const min = String(now.getMinutes()).padStart(2, "0");
+        const sec = String(now.getSeconds()).padStart(2, "0");
+        document.getElementById("clock").textContent = `${hour}:${min}:${sec}`;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // (실제 서비스에선 이 부분에서 fetch/AJAX 등으로 서버에서 정보 받아와야 함)
+      // 예시 데이터: 현 사용자, 기타 접속자(정렬)
+      const currentUser = "홍민기";
+      let otherUsers = ["박성순", "최대한", "이광욱"];
+
+      // (현 사용자 제외하고 접속자 정렬, 닉네임 오름차순)
+      otherUsers = otherUsers.filter((u) => u !== currentUser).sort();
+
+      // 화면에 뿌리기
+      document.getElementById("currentUser").textContent = "현 사용자 : " + currentUser;
+      const userListElem = document.getElementById("userList");
+      otherUsers.forEach(function (user) {
+        const li = document.createElement("li");
+        li.textContent = user;
+        userListElem.appendChild(li);
+      });
+
+      // ★ 실제 서비스에서는 여기에 AJAX, WebSocket 등으로 실시간 정보 받아오고
+      //   받아온 데이터로 위의 currentUser, otherUsers 갱신하면 됩니다!
+
+      // 오늘의 상세 날씨 예시 데이터
+      // 한국 요일 배열 (일~토)
+      const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
+
+      // 오늘 날짜/요일 구하기
+      const todayObj = new Date();
+      const todayY = todayObj.getFullYear();
+      const todayM = String(todayObj.getMonth() + 1).padStart(2, "0");
+      const todayD = String(todayObj.getDate()).padStart(2, "0");
+      const todayDayIdx = todayObj.getDay();
+      const todayDay = weekDays[todayDayIdx];
+
+      // 오늘의 상세 날씨 예시 데이터
+      const todayDetail = {
+        date: `${todayY}-${todayM}-${todayD}`,
+        day: todayDay,
+        location: "서울",
+        main: "흐림",
+        temp: 21,
+        humidity: 63,
+        feel: 22,
+        pop: 40, // 강수확률(%)
+      };
+
+      // 1주일 요일별 날씨 (예시) - 실제 연동 시 이 배열만 바꾸면 됨
+      const weekWeather = [
+        { day: "일", temp: 22, icon: "☀️", main: "맑음" },
+        { day: "월", temp: 18, icon: "🌤️", main: "구름 많음" },
+        { day: "화", temp: 20, icon: "⛅", main: "흐림" },
+        { day: "수", temp: 17, icon: "🌦️", main: "비" },
+        { day: "목", temp: 21, icon: "🌧️", main: "비" },
+        { day: "금", temp: 19, icon: "☀️", main: "맑음" },
+        { day: "토", temp: 20, icon: "⛅", main: "흐림" },
+      ];
+
+      // 오늘 상세 날씨 박스 내용 (요일 추가)
+      document.getElementById("todayDetail").innerHTML = `
+          <div class="weather-today-title">${todayDetail.date} (${todayDetail.day}) · ${todayDetail.location}</div>
+          <div class="weather-today-info">
+            오늘 날씨: ${todayDetail.main} / ${todayDetail.temp}°C
+          </div>
+          <div class="weather-today-etc">
+            습도: ${todayDetail.humidity}%<br>
+            체감: ${todayDetail.feel}°C<br>
+            강수확률: ${todayDetail.pop}%
+          </div>
+        `;
+
+      // 실시간 오늘 날씨 (간단)
+      document.getElementById("weatherInfo").innerHTML = `
+          <div class="weather-main">${todayDetail.main} ☁️</div>
+          <div class="weather-temp">${todayDetail.temp}°C</div>
+          <div class="weather-location">${todayDetail.location}</div>
+        `;
+
+      // 1주일(요일별) 날씨 리스트
+      const weekListHtml = weekWeather
+        .map((item, idx) => {
+          // 오늘 요일과 같은 경우 강조
+          const isToday = item.day === todayDay;
+          return `
+            <div class="weather-week-day${isToday ? " today" : ""}">
+              <span>${item.day}</span>
+              <span class="icon">${item.icon}</span>
+              <span>${item.main}</span>
+              <span class="weather-week-temp">${item.temp}°C</span>
+            </div>
+          `;
+        })
+        .join("");
+      document.getElementById("weatherWeek").innerHTML = `
+          <div class="weather-week-title">1주일 요일별 날씨</div>
+          <div class="weather-week-list">
+            ${weekListHtml}
+          </div>
+        `;
+
+      /**
+       * 실제 서비스에선
+       *   1) 오늘 상세: fetch("/api/weather/today") → todayDetail에 값 대입
+       *   2) 1주일 요일별: fetch("/api/weather/week") → weekWeather 배열에 값 대입
+       * 하면 즉시 반영됩니다!
+       */
+    </script>
+
+    <!-- <script>
+      async function loadComponent(id, url) {
+        const res = await fetch(url);
+        const html = await res.text();
+        console.log(html);
+
+        document.getElementById(id).innerHTML = html;
+      }
+
+      loadComponent("header", "/templates/includes/header.html");
+      loadComponent("sidebar", "/templates/includes/sidebar.html");
+      loadComponent("main", "/templates/includes/main.html");
+      loadComponent("footer", "/templates/includes/footer.html");
+    </script> -->
+  </body>
+</html>

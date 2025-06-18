@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.sort-section {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.sort-section select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#reviewContainer .review-box {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+#reviewContainer .review-box:last-child {
+    border-bottom: none;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.review-header strong {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.rating {
+    color: #ff9900;
+    font-weight: bold;
+}
+
+.content {
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.date {
+    font-size: 0.85em;
+    color: #999;
+}
+
+.search-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.search-section input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 60%;
+    max-width: 300px;
+    margin-right: 10px;
+}
+
+.search-section select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-section button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+/* ✅ 페이지네이션 스타일 (ID 맞춤 적용) */
+#paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+#paginationContainer button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #007bff;
+}
+
+#paginationContainer button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+#paginationContainer button:hover:not(.active) {
+    background-color: #e2e6ea;
+}

@@ -1,0 +1,30 @@
+#storeDetailContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Malgun Gothic', sans-serif;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.image-gallery img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 600px) {
+  #storeDetailContainer {
+    padding: 10px;
+  }
+  .image-gallery img {
+    width: 100px;
+    height: 100px;
+  }
+}
