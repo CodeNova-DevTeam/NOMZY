@@ -207,6 +207,7 @@
 
       /* ---- 서치바 (헤더 아래) ---- */
       .search-bar {
+        position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
@@ -248,6 +249,32 @@
       .search-form input:focus {
         border: 1.5px solid #54c3fc;
         box-shadow: 0 2px 8px rgba(81, 150, 200, 0.1);
+      }
+
+      .suggestion-box {
+        display: none; /* 처음에는 숨김 */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1.5px solid #86ebff;
+        border-top: none;
+        border-radius: 0 0 16px 16px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 99;
+        font-size: 0.95rem;
+      }
+
+      .suggestion-item {
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .suggestion-item:hover {
+        background: #e5faff;
       }
 
       .search-button {
@@ -302,22 +329,6 @@
         overflow: hidden;
       }
 
-      .sidebar-close {
-        position: absolute;
-        border: 1px solid black;
-        top: 1.3rem;
-        right: 1rem;
-        font-size: 1.2rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        transition: color 0.25s;
-      }
-
-      .sidebar-close:hover {
-        color: #cacaca;
-      }
-
       .sidebar-main {
         flex-grow: 1;
         overflow-y: scroll;
@@ -329,30 +340,6 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
       }
 
-      /* .sidebar-footer {
-        flex-shrink: 0;
-        padding: 10%;
-        position: relative;
-        background-color: rgba(255, 255, 255, 0);
-      }
-
-      .logout-button {
-        display: none;
-        position: absolute;
-        font-size: 0.9rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        bottom: 30%;
-        right: 10%;
-        background-color: rgba(255, 255, 255, 0.256);
-        transition: color 0.25s;
-      }
-
-      .logout-button:hover {
-        color: #cacaca;
-      } */
-
       .sidebar-footer {
         flex-shrink: 0;
         padding: 10%;
@@ -361,7 +348,7 @@
       }
 
       .logout-button {
-        display: none; /* ✅ 기본은 숨김 */
+        display: none;
         position: absolute;
         font-size: 0.9rem;
         background: none;
@@ -908,20 +895,16 @@
             <div>NOMZY</div>
           </div>
         </div>
+
+        <!-- 서치바 -->
         <div class="search-bar">
           <form onsubmit="handleSearch(event)" class="search-form" autocomplete="on">
-            <input list="suggestions" type="text" id="searchInput" placeholder="찾으시는 맛집을 입력해 주세요." />
-            <datalist id="suggestions">
-              <option value="삼겹살" />
-              <option value="파스타" />
-              <option value="카페" />
-              <option value="분식" />
-              <option value="일식" />
-            </datalist>
+            <input id="searchInput" type="text" placeholder="찾으시는 맛집을 입력해 주세요." />
             <button type="submit" class="search-button">
               <img src="../public/img/search.png" alt="검색" />
             </button>
           </form>
+          <div id="searchSuggestions" class="suggestion-box"></div>
         </div>
       </header>
 
@@ -933,7 +916,6 @@
       <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
           <h3 class="menu-mainName">전체 메뉴</h3>
-          <button class="sidebar-close" onclick="closeSidebar()">✕</button>
         </div>
 
         <div class="sidebar-main">
@@ -950,10 +932,6 @@
           <a href="#" class="menu-mainbtn menu-text">댓글후기</a>
           <a href="#" class="menu-mainbtn menu-text">홈페이지 소개</a>
         </div>
-
-        <!-- <div class="sidebar-footer">
-          <button id="logoutBtn" class="logout-button" onclick="handleLogout()">로그아웃</button>
-        </div> -->
 
         <div class="sidebar-footer">
           <button id="sidebarLogoutBtn" class="logout-button">로그아웃</button>
@@ -1098,15 +1076,69 @@
 
           alert("로그아웃 되었습니다.");
           updateLogoutBtn();
-          updateHeaderUI?.(); // 드롭다운 쪽 닉네임 숨기기
-          closeSidebar();
+          updateHeaderUI?.();
           window.location.reload(); // 필요시 제거 가능
         } catch (err) {
           alert("로그아웃 중 오류: " + err.message);
         }
       }
 
+      function handleSearch(event) {
+        event.preventDefault(); // 기본 폼 제출 막기
+
+        const input = document.getElementById("searchInput");
+        const keyword = input.value.trim();
+
+        if (!keyword) {
+          alert("검색어를 입력해주세요.");
+          return;
+        }
+
+        // 검색 결과 페이지로 이동 (검색어 파라미터 포함)
+        window.location.href = `/searchResult.html?keyword=${encodeURIComponent(keyword)}`;
+      }
+
       window.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("searchInput");
+        const box = document.getElementById("searchSuggestions");
+        const keywords = ["삼겹살", "파스타", "카페", "분식", "일식", "초밥", "비건", "데이트", "혼밥", "야식"];
+
+        input.addEventListener("input", () => {
+          const query = input.value.toLowerCase();
+          box.innerHTML = "";
+
+          if (!query) {
+            box.style.display = "none";
+            return;
+          }
+
+          const matched = keywords.filter((k) => k.includes(query));
+          if (matched.length === 0) {
+            box.style.display = "none";
+            return;
+          }
+
+          matched.forEach((word) => {
+            const div = document.createElement("div");
+            div.className = "suggestion-item";
+            div.textContent = word;
+            div.addEventListener("click", () => {
+              input.value = word;
+              box.innerHTML = "";
+              box.style.display = "none";
+            });
+            box.appendChild(div);
+          });
+
+          box.style.display = "block";
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!box.contains(e.target) && e.target !== input) {
+            box.style.display = "none";
+          }
+        });
+
         updateHeaderUI();
         updateLogoutBtn();
 
