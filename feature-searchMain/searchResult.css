@@ -162,7 +162,12 @@ body {
     flex-shrink: 0; /* 이미지 크기 유지를 위해 */
     background-color: #e0e0e0; /* 로딩 중 배경색 */
 }
-
+.store-region {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #888;
+}
 /* 단계 2: 대형 데스크톱 (1600px ~ 1919px) */
 @media (max-width: 1919px) {
     html {

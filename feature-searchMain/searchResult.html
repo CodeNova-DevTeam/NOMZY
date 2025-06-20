@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOMZY : 검색결과</title>
-    <link rel="stylesheet" href="/feature-searchMain/search.css">
-    <script type="module" src="/feature-searchMain/search.js"></script>
+    <link rel="stylesheet" href="/feature-searchMain/searchResult.css">
+    <script defer src="/feature-searchMain/searchResult.js"></script>
 
 </head>
 
 <body>
 
-  <main>
-    <section class="search-result">
+  <main style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+    <section class="search-result" style="flex: 1;">
       <h2 id="searchQueryDisplay">검색 결과</h2>
 
       <!-- 🔽 정렬 셀렉터 추가 -->
       <div class="sort-container">
         <label for="sortOption">정렬 기준:</label>
         <select id="sortOption">
-          <option value="default">기본 정렬</option>
-          <option value="rating">평점순</option>
+          <option value="rating" selected>평점순</option>
+          <option value="views">조회 순</option>
+          <option value="alphabet">가나다 순</option>
           <option value="favorite">즐겨찾기</option>
           <option value="reviews">리뷰 많은 순</option>
         </select>
@@ -30,6 +31,11 @@
         <!-- JS에서 가게 카드가 여기에 추가 -->
       </div>
     </section>
+
+    <aside class="ranking-box" style="width: 240px; position: sticky; top: 80px;">
+      <h3 style="text-align: center;">인기 맛집 TOP 5</h3>
+      <ul id="topRankingList" style="list-style: none; padding: 0;"></ul>
+    </aside>
   </main>
     
     
