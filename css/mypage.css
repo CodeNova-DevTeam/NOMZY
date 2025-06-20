@@ -1,0 +1,163 @@
+/* ✅ 전체 컨테이너 */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ✅ 왼쪽 정보 영역 */
+.center-container {
+  flex: 1;
+  margin-right: 40px;
+}
+
+.center-container h2 {
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #2d3436;
+}
+
+/* ✅ 정보 박스 */
+.info-box {
+  background: #f9f9f9;
+  border: 1px solid #dcdde1;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row strong {
+  width: 120px;
+  color: #2f3640;
+  font-weight: 500;
+}
+
+.info-row span {
+  flex: 1;
+  text-align: left;
+  color: #636e72;
+}
+
+.info-row button {
+  background-color: #00b894;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.info-row button:hover {
+  background-color: #019875;
+}
+
+/* ✅ 사이드바 */
+.sidebar {
+  width: 220px;
+  background-color: #fff;
+  border: 1px solid #dfe6e9;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+/* ✅ 사이드 버튼 */
+.sidebar-button {
+  display: block;
+  width: 100%;
+  background-color: #0984e3;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar-button:hover {
+  background-color: #74b9ff;
+}
+
+/* ✅ 드롭다운 메뉴 */
+.dropdown-content {
+  margin-top: 6px;
+  display: none;
+  flex-direction: column;
+}
+
+.dropdown-content a {
+  color: #636e72;
+  text-decoration: none;
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+  background: #dfe6e9;
+}
+
+/* ✅ 보안영역 */
+.security-box {
+  margin-top: 20px;
+}
+
+.security-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #2d3436;
+}
+
+.green-btn {
+  display: inline-block;
+  background-color: #00cec9;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.green-btn:hover {
+  background-color: #01a3a4;
+}
+
+.blue-link {
+  display: inline-block;
+  color: #d63031;
+  padding: 6px 0;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+/* ✅ 중복 확인 버튼 비활성화 스타일 */
+
+.popup-check:disabled {
+  background-color: #dcdde1;
+  color: #7f8c8d;
+  cursor: not-allowed;
+}

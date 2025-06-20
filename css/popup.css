@@ -1,0 +1,140 @@
+/* ✅ 공통 팝업 레이아웃 */
+.popup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 어두운 배경 */
+}
+
+/* ✅ 팝업 본체 */
+.popup {
+  background: #ffffff;
+  padding: 2rem;
+  width: 400px;
+  max-width: 90%;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: popupFadeIn 0.3s ease-out;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ✅ 팝업 제목 */
+.popup-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+  text-align: center;
+}
+
+/* ✅ 입력 폼 */
+.popup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.popup-input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.popup-input:focus {
+  border-color: #00b894;
+  outline: none;
+}
+
+/* ✅ 메시지 */
+.popup-message {
+  font-size: 0.9rem;
+  color: #d63031;
+  text-align: center;
+}
+
+/* ✅ 버튼 영역 */
+.popup-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.popup-submit,
+.popup-cancel,
+.popup-check {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.popup-submit {
+  background-color: #00b894;
+  color: white;
+}
+
+.popup-cancel {
+  background-color: #dfe6e9;
+  color: #2d3436;
+}
+
+.popup-check {
+  background-color: #0984e3;
+  color: white;
+  width: 100%;
+}
+
+/* ✅ 눈 아이콘 */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0 0.5rem;
+  background: #fff;
+}
+
+.input-group input {
+  border: none;
+  flex: 1;
+  padding: 0.8rem;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+}
+
+.toggle-password {
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+/* ✅ 애니메이션 */
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popup-submit:disabled {
+  background-color: #b2bec3; /* 회색 */
+  color: white;
+  cursor: not-allowed;
+}

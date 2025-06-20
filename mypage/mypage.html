@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="../css/mypage.css" />
+    <link rel="stylesheet" href="../css/popup.css" />
+  </head>
+  <body>
+    <button id="logoutBtn" style="position: absolute; top: 20px; right: 20px">로그아웃</button>
+
+    <div class="main-container">
+      <div class="center-container">
+        <h2>내 정보</h2>
+        <div class="info-box">
+          <div class="info-row">
+            <strong>이메일:</strong> <span id="info-email">-</span>
+            <button id="editEmailBtn">변경</button>
+          </div>
+          <div class="info-row">
+            <strong>닉네임:</strong> <span id="info-nickname">-</span>
+            <button id="editNicknameBtn">변경</button>
+          </div>
+          <div class="info-row"><strong>이름:</strong> <span id="info-name">-</span></div>
+          <div class="info-row"><strong>생년월일:</strong> <span id="info-birthDate">-</span></div>
+          <div class="info-row">
+            <strong>전화번호:</strong> <span id="info-phoneNumber">-</span>
+            <button id="editPhoneBtn">변경</button>
+          </div>
+          <div class="info-row"><strong>통신사:</strong> <span id="info-mobileCarrier">-</span></div>
+          <div class="info-row"><strong>성별:</strong> <span id="info-gender">-</span></div>
+          <div class="info-row">
+            <strong>리뷰:</strong> <span id="info-review">-</span>
+            <button id="fetchReviewBtn">조회</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <button class="sidebar-button" onclick="location.href='../main.html'">홈</button>
+        <div class="dropdown">
+          <button class="sidebar-button" id="accountToggle">계정정보 ▼</button>
+          <div class="dropdown-content" id="accountDropdown" style="display: none">
+            <a href="#">모음</a>
+            <a href="#">중요 내용</a>
+          </div>
+        </div>
+        <div class="security-box">
+          <p class="security-title">계정 보안</p>
+          <a href="#" id="openChangePasswordPopup" class="green-btn">비밀번호 변경</a>
+          <a href="#" id="openDeletePopup" class="blue-link">회원 탈퇴</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 닉네임 변경 팝업 -->
+    <div id="nicknamePopupOverlay" class="popup-container" style="display: none">
+      <div class="popup">
+        <h3 class="popup-title">닉네임 변경</h3>
+        <form id="nicknameForm" class="popup-form">
+          <input type="text" id="currentNickname" class="popup-input" placeholder="현재 닉네임 " readonly />
+          <input type="text" id="newNickname" class="popup-input" placeholder="새 닉네임 입력" required />
+          <button type="button" id="checkNicknameBtn" class="popup-check" disabled>중복 확인</button>
+          <div id="nicknameMessage" class="popup-message"></div>
+          <div class="popup-actions">
+            <button type="submit" class="popup-submit">변경</button>
+            <button type="button" id="cancelNickname" class="popup-cancel">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 이메일 변경 팝업 -->
+    <div id="emailPopupOverlay" class="popup-container" style="display: none">
+      <div class="popup">
+        <h3 class="popup-title">이메일 변경</h3>
+        <form id="emailForm" class="popup-form">
+          <input type="email" id="currentEmail" class="popup-input" placeholder="기존 이메일 입력" required />
+          <input type="email" id="newEmail" class="popup-input" placeholder="새 이메일 입력" required />
+          <button type="button" id="checkEmailBtn" class="popup-check" disabled>중복 확인</button>
+          <div id="emailMessage" class="popup-message"></div>
+          <div class="popup-actions">
+            <button type="submit" class="popup-submit">변경</button>
+            <button type="button" id="closeEmailPopup" class="popup-cancel">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 전화번호 + 통신사 변경 팝업 -->
+    <div id="phonePopupOverlay" class="popup-container" style="display: none">
+      <div class="popup">
+        <h3 class="popup-title">전화번호 변경</h3>
+        <form id="phoneForm" class="popup-form">
+          <input type="tel" id="currentPhoneNumber" class="popup-input" placeholder="기존 전화번호 입력" required />
+          <input type="tel" id="newPhoneNumber" class="popup-input" placeholder="새 전화번호 입력" required />
+          <label for="mobileCarrier" class="popup-label">통신사 선택</label>
+          <select id="mobileCarrier" class="popup-input" required>
+            <option value="">-- 통신사를 선택하세요 --</option>
+            <option value="KT">KT</option>
+            <option value="SKT">SKT</option>
+            <option value="LGU+">LG U+</option>
+            <option value="알뜰폰">알뜰폰</option>
+          </select>
+          <div id="phoneMessage" class="popup-message"></div>
+          <div class="popup-actions">
+            <button type="submit" class="popup-submit">변경</button>
+            <button type="button" id="cancelPhone" class="popup-cancel">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 비밀번호 변경 팝업 -->
+    <div id="passwordPopupOverlay" class="popup-container" style="display: none">
+      <div class="popup">
+        <h3 class="popup-title">비밀번호 변경</h3>
+        <form id="passwordForm" class="popup-form">
+          <div class="input-group">
+            <input type="password" id="currentPassword" class="popup-input" placeholder="현재 비밀번호 입력" required />
+            <span class="toggle-password" data-target="currentPassword">👁️</span>
+          </div>
+          <div class="input-group">
+            <input type="password" id="newPassword" class="popup-input" placeholder="새 비밀번호 입력" required />
+            <span class="toggle-password" data-target="newPassword">👁️</span>
+          </div>
+          <div class="input-group">
+            <input type="password" id="confirmPassword" class="popup-input" placeholder="새 비밀번호 확인" required />
+            <span class="toggle-password" data-target="confirmPassword">👁️</span>
+          </div>
+          <div id="passwordMessage" class="popup-message"></div>
+          <div class="popup-actions">
+            <button type="submit" class="popup-submit">변경</button>
+            <button type="button" id="cancelPassword" class="popup-cancel">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 회원 탈퇴 팝업 -->
+    <div id="deletePopupOverlay" class="popup-container" style="display: none">
+      <div class="popup">
+        <h3 class="popup-title" style="color: red">정말 탈퇴하시겠습니까?</h3>
+        <p id="userInfoToDelete" class="popup-text" style="white-space: pre-wrap">
+          탈퇴 시 모든 정보가 삭제되며 복구할 수 없습니다.
+        </p>
+        <div class="popup-actions">
+          <button id="confirmDelete" class="popup-submit">확인</button>
+          <button id="cancelDelete" class="popup-cancel">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS 연결 -->
+    <script src="../js/mypage.js"></script>
+    <script src="../js/nickname.js"></script>
+    <script src="../js/email.js"></script>
+    <script src="../js/password.js"></script>
+    <script src="../js/phoneNumber.js"></script>
+
+    <!-- 로그아웃 처리 -->
+    <script>
+      document.getElementById("logoutBtn")?.addEventListener("click", () => {
+        localStorage.clear();
+        alert("로그아웃 되었습니다.");
+        window.location.href = "../login.html";
+      });
+    </script>
+  </body>
+</html>
