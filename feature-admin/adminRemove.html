@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 페이지 - NOMZY</title>
+  <link rel="stylesheet" href="/feature-admin/adminRemove.css" />
+  <script defer src="/feature-admin/adminRemove.js"></script>
+</head>
+<body>
+  <div class="admin-container">
+    <h2>👑 관리자 페이지</h2>
+    <div class="filter-section">
+      <label for="sort">정렬 기준:</label>
+      <select id="sort">
+        <option value="nickname">가나다순</option>
+        <option value="region">지역 (동)</option>
+        <option value="reviewCount">리뷰 개수</option>
+      </select>
+    </div>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>닉네임</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <!-- 유저 리스트가 여기에 동적으로 채워짐 -->
+      </tbody>
+    </table>
+    <div class="pagination" id="paginationContainer"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMZY : 상세 리뷰</title>
+    <link rel="stylesheet" href="/feature-reviewDetail/reviewdetail.css">
+    <script defer src="/feature-reviewDetail/reviewdetail.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+
+    <h1 class="review-title" id="reviewTitle">리뷰 제목</h1>
+
+    <div class="review-info">
+      <span id="storeName" class="store">가게명</span> /
+      <span id="category" class="category">카테고리</span> /
+      <span id="region" class="region">지역</span> /
+      <span id="rating" class="rating">⭐ 4.5</span>
+    </div>
+
+    <div class="review-author">
+      작성자: <strong id="nickname">nickname</strong>
+      <span id="date" class="date">2025-07-04</span>
+    </div>
+
+    <div class="review-content-section">
+      <p id="reviewContent" class="review-content">리뷰 본문이 여기에 표시됩니다.</p>
+      <div id="reviewImage" class="review-image" style="display:none;">
+        <img src="" alt="리뷰 이미지" onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <div id="ownerButtons" class="review-actions" style="display: none;">
+      <button id="editBtn">✏️ 수정</button>
+      <button id="deleteBtn">🗑 삭제</button>
+    </div>
+
+    <div class="review-buttons">
+      <button id="likeBtn">👍 0</button>
+      <button id="dislikeBtn">👎 0</button>
+      <button id="reportBtn">🚫 신고</button>
+    </div>
+
+    <hr>
+
+    <div class="reply-section">
+      <h3>💬 댓글</h3>
+      <div id="replyList"></div>
+
+      <div class="reply-form">
+        <input type="text" id="replyInput" placeholder="댓글을 입력하세요">
+        <button id="replySubmit">등록</button>
+      </div>
+
+      <div id="replyPagination" class="reply-pagination"></div>
+    </div>
+
+  </div>
+</body>
+</html>

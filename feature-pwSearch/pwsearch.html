@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NOMZY : 비밀번호 찾기</title>
+    <link rel="stylesheet" href="/feature-pwSearch/pwsearch.css" />
+    <script type="module" src="/feature-pwSearch/pwsearch.js"></script>
+    </head>
+
+  <body>
+    <a href="#" class="logo">NOMZY</a>
+    <form id="passwordSearchForm" name="passwordSearchForm">
+        <div class="personalInformationSearch">
+          <input id="userSearchName" name="searchName" class="inputBox" type="text" placeholder="이름" />
+          <span id="searchNameError" name="errorMessage"></span>
+          <input id="userSearchEmail" name="searchEmail" class="inputBox" type="email" placeholder="e-mail" />
+          <!-- 인증번호 타이머 표시 영역 -->
+           <div id="authTimerDisplay" style="display: none; margin-top: 5px; color: gray;"></div>
+
+          <span id="searchEmailError" name="errorMessage"></span>
+
+          <div class="authentication-group">
+            <button id="authenticationNumberButton" name="errorMessage" class="authentication-number-button" type="button">인증번호 받기</button>
+            <input id="authenticationNumber" name="errorMessage" class="inputBox" type="tel" placeholder="인증번호 (6자리 숫자)" maxlength="6" disabled/>
+            <span id="authenticationNumberError" name="errorMessage"></span>
+            <!-- <div id="authTimerDisplay" style="display:none; color:gray; font-size:0.9em; margin-top:4px;"></div> -->
+            <button id="verifyAuthButton" type="button" class="authentication-verify-button">인증번호 확인</button>
+          </div>
+
+          <div class="new-password-section">
+              <input id="newPassword" name="newPassword" class="inputBox" type="password" placeholder="새 비밀번호 (8~16자)" minlength="8" maxlength="16" />
+              <span id="newPasswordError" name="errorMessage"></span>
+              <input id="newPasswordConfirm" name="newPasswordConfirm" class="inputBox" type="password" placeholder="새 비밀번호 확인" minlength="8" maxlength="16" />
+              <span id="newPasswordConfirmError" name="errorMessage"></span>
+          </div>
+
+          <div class="buttonBox">
+            <button class="nextButton" type="submit">비밀번호 찾기</button>
+          </div>
+      </div>
+    </form>
+  </body>
+</html>
